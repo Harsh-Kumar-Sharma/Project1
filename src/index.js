@@ -18,6 +18,15 @@ mongoose.connect("mongodb+srv://SubhoYadav:2YqGHmy0GiXcwxCR@cluster0.ph4caby.mon
 
 app.use('/', route);
 
+app.use((req,res)=>{
+    res.status(404).send("request not found")
+})
+
+app.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.status(500).send('Something broke!')
+  })
+
 
 app.listen(process.env.PORT || 3000, function () {
     console.log('Express app running on port ' + (process.env.PORT || 3000))

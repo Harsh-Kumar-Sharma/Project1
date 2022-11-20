@@ -1,5 +1,6 @@
 const authorModel=require('../Models/authorModel')
 const{isValidObjectId}=require('mongoose')
+const blogModel = require('../Models/blogModel')
 const blogValidator=async (req,res,next)=>{
     try{
         
@@ -71,3 +72,8 @@ const blogValidator=async (req,res,next)=>{
 }
 
 module.exports.blogValidator=blogValidator
+
+
+
+
+

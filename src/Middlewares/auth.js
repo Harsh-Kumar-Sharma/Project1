@@ -27,6 +27,9 @@ const mid2=async (req,res,next)=>{
   if(!isValidObjectId(blogId))
   return res.status(401).send({status:false,msg:"not authorized"})
   let data= await blogModel.findById(blogId)
+  if(!data){
+    return res.status(404).send({status:false,msg:"Blog not available"})
+  }
   if(req.abc.authorId==data.authorId)
   next();
   else

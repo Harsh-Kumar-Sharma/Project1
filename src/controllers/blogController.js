@@ -54,7 +54,7 @@ const updateBlog = async (req,res)=>{
 
     blog.save()
 
-res.status(200).send({status:true,msg:blog})
+return res.status(200).send({status:true,msg:blog})
     }
     catch(error){
         res.status(500).send({status:false,err_msg:error.message})
@@ -72,13 +72,13 @@ const deleteBlog=async (req,res)=>{
     if(!blog||blog.isDeleted){
        return res.status(404).send({status:false,msg:"Blog is not available"})
     }
-    if(blog.authorId!=req.abc.authorId){
-        return res.send({status:false,msg:"Unauthorised operation"})
-    }
+    // if(blog.authorId!=req.abc.authorId){
+    //     return res.send({status:false,msg:"Unauthorised operation"})
+    // }
     blog.isDeleted=true
     blog.deletedAt=new Date()
     blog.save()
-    res.status(200).send() //README:Check if the blogId exists( and is not deleted). If it does, mark it deleted and return an HTTP status 200 without any response body.
+    return res.status(200).send() //README:Check if the blogId exists( and is not deleted). If it does, mark it deleted and return an HTTP status 200 without any response body.
 }
 catch(error){
     res.status(500).send({status:false,err_msg:error.message})
@@ -145,7 +145,7 @@ const getblog= async (req,res)=>{
         if(filteredBlog.length==0){
             return res.status(404).send({status:false,msg:"No blogs available with the given subcategory "})
         }
-        res.send({status:false,msg:filteredBlog,count:filteredBlog.length})
+       return  res.send({status:false,msg:filteredBlog,count:filteredBlog.length})
     }
 
    
@@ -174,12 +174,12 @@ const getblog= async (req,res)=>{
         if(filteredBlog.length==0){
             return res.status(404).send({status:false,msg:"No blogs available with the given tags"})
         }
-        res.send({status:true,msg:filteredBlog,count:filteredBlog.length})
+       return  res.send({status:true,msg:filteredBlog,count:filteredBlog.length})
     }
 
     else{
         const blogs=await blogModel.find({isDeleted:false,isPusblished:true})
-        res.status(200).send({status:true,msg:blogs})
+        return res.status(200).send({status:true,msg:blogs})
     }
 
    }
@@ -210,7 +210,7 @@ const deleteBlogByQuery = async function (req, res) {
             return res.status(400).send({status:false,msg: "Author ID is not valid"})
         }
         if(req.abc.authorId!=id){
-            res.status(401).send({status:false,msg:"Unauthorise"})
+            return  res.status(401).send({status:false,msg:"Unauthorise"})
            }
     
         // const validAuthorIds= (await authorModel.find().select({_id:1})).map((author)=>author._id.toString());
@@ -261,7 +261,7 @@ const deleteBlogByQuery = async function (req, res) {
                 blog.save()
             
         })
-        res.status(200).send({status:true,msg:"Blogs deleted"})
+       return  res.status(200).send({status:true,msg:"Blogs deleted"})
     }
 
     if(subcategory){
@@ -294,7 +294,7 @@ const deleteBlogByQuery = async function (req, res) {
                     blog.save()
                 
             })
-            res.status(200).send({status:true,msg:"Blogs deleted"})
+            return res.status(200).send({status:true,msg:"Blogs deleted"})
         }
   
     } catch (error) {
